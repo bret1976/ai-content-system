@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intake — AI Content System Install</title>
+  <meta name="description" content="Kickoff intake for your AI Content System Install. 15 minutes. Starts the 72-hour delivery clock." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #06060a;
+      --bg-elev: #0c0c14;
+      --bg-card: rgba(18, 18, 28, 0.72);
+      --line: rgba(255,255,255,0.08);
+      --line-bright: rgba(255,255,255,0.14);
+      --text: #f4f4f8;
+      --muted: #9a9aab;
+      --dim: #6b6b7c;
+      --accent: #5ef0c3;
+      --accent-2: #8b7cf6;
+      --accent-glow: rgba(94, 240, 195, 0.35);
+      --violet-glow: rgba(139, 124, 246, 0.28);
+      --warn: #ffb86b;
+      --danger: #ff6b8a;
+      --radius: 20px;
+      --max: 720px;
+      --font-display: "Syne", system-ui, sans-serif;
+      --font-serif: "Instrument Serif", Georgia, serif;
+      --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(900px 520px at 8% -5%, rgba(94,240,195,0.12), transparent 55%),
+        radial-gradient(800px 480px at 92% 5%, rgba(139,124,246,0.16), transparent 50%),
+        linear-gradient(180deg, #06060a 0%, #08080f 100%);
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 2rem)); margin: 0 auto; padding: 1.5rem 0 4rem; }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.15rem 0;
+      margin-bottom: 1.5rem;
+    }
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+    }
+    .brand span {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.72rem;
+      color: var(--dim);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .lede { color: var(--muted); margin-bottom: 2rem; max-width: 36rem; }
+    .tier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--line-bright);
+      background: rgba(139,124,246,0.12);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .tier-pill strong { color: var(--accent); font-weight: 700; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    }
+    @media (min-width: 640px) { .card { padding: 2rem; } }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.01em;
+    }
+    .field { margin-bottom: 1.15rem; }
+    .hint { font-size: 0.75rem; color: var(--dim); margin-top: 0.35rem; }
+    input, textarea, select {
+      width: 100%;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--line-bright);
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+      color: var(--text);
+      font: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: rgba(94,240,195,0.55);
+      box-shadow: 0 0 0 3px rgba(94,240,195,0.15);
+    }
+    textarea { min-height: 96px; resize: vertical; }
+    .row { display: grid; gap: 1rem; }
+    @media (min-width: 560px) {
+      .row.two { grid-template-columns: 1fr 1fr; }
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .chip {
+      border: 1px solid var(--line-bright);
+      background: rgba(255,255,255,0.03);
+      border-radius: 999px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip:hover { color: var(--text); border-color: rgba(94,240,195,0.4); }
+    .chip.active {
+      color: #04120e;
+      background: var(--accent);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.9rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #04120e;
+      box-shadow: 0 0 0 1px rgba(94,240,195,0.3), 0 12px 40px var(--accent-glow);
+      width: 100%;
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      border-color: var(--line-bright);
+      color: var(--text);
+    }
+    .actions { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+    .msg {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      display: none;
+    }
+    .msg.show { display: block; }
+    .msg.err { background: rgba(255,107,138,0.12); border: 1px solid rgba(255,107,138,0.35); color: #ffc0cc; }
+    .msg.ok { background: rgba(94,240,195,0.1); border: 1px solid rgba(94,240,195,0.35); color: #b8ffe8; }
+    .success-panel { display: none; text-align: center; padding: 1rem 0; }
+    .success-panel.show { display: block; }
+    .success-panel h2 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 1.75rem;
+      margin: 0.75rem 0;
+    }
+    .order-id {
+      font-family: ui-monospace, monospace;
+      font-size: 0.95rem;
+      color: var(--accent);
+      background: rgba(0,0,0,0.35);
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 0.75rem 0 1.25rem;
+      border: 1px solid var(--line);
+    }
+    .form-wrap.hide { display: none; }
+    footer {
+      margin-top: 2.5rem;
+      color: var(--dim);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="/">The Ambre Group <span>Content Install</span></a>
+      <a class="btn btn-ghost" href="/" style="padding:0.55rem 1rem;font-size:0.8rem">← Offer</a>
+    </nav>
+
+    <p class="eyebrow">Step 2 of 2 · Kickoff intake</p>
+    <h1>Tell us what to build. <em>15 minutes.</em></h1>
+    <p class="lede">Required fields match our fulfillment schema. Submitting starts the <strong style="color:var(--text)">72-hour delivery clock</strong>. You’ll get Drive + Gmail when the pack is ready.</p>
+    <div class="tier-pill" id="tierPill">Tier: <strong id="tierLabel">standard</strong></div>
+
+    <div class="card form-wrap" id="formWrap">
+      <form id="intakeForm" novalidate>
+        <div class="row two">
+          <div class="field">
+            <label for="client_name">Client / brand name *</label>
+            <input id="client_name" name="client_name" required placeholder="Acme Coaching" autocomplete="organization" />
+          </div>
+          <div class="field">
+            <label for="email">Email (delivery + revisions) *</label>
+            <input id="email" name="email" type="email" required placeholder="you@company.com" autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="row two">
+          <div class="field">
+            <label for="handle">Handle (optional)</label>
+            <input id="handle" name="handle" placeholder="@yourhandle" />
+          </div>
+          <div class="field">
+            <label for="tier">Tier *</label>
+            <select id="tier" name="tier" required>
+              <option value="starter">Starter — $497</option>
+              <option value="standard" selected>Standard — $997</option>
+              <option value="dwy">Done-with-you — $1,497</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="niche">Niche *</label>
+          <textarea id="niche" name="niche" required placeholder="e.g. Executive coaching for US mid-market SaaS founders…"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="offer">Primary offer *</label>
+          <textarea id="offer" name="offer" required placeholder="Name + what they get + price if comfortable"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="icp">Ideal client (ICP) *</label>
+          <textarea id="icp" name="icp" required placeholder="Who buys, situation, pain, what they hate in marketing…"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Primary platform *</label>
+          <div class="chips" id="platformChips" role="group" aria-label="Primary platform">
+            <button type="button" class="chip active" data-value="linkedin">LinkedIn</button>
+            <button type="button" class="chip" data-value="x">X</button>
+            <button type="button" class="chip" data-value="ig">Instagram</button>
+          </div>
+          <input type="hidden" id="primary_platform" name="primary_platform" value="linkedin" required />
+        </div>
+
+        <div class="field">
+          <label for="sample_links">Sample links (one per line, 1–10) *</label>
+          <textarea id="sample_links" name="sample_links" required placeholder="https://linkedin.com/posts/…&#10;https://…"></textarea>
+          <p class="hint">Posts or pages whose voice/style you like.</p>
+        </div>
+
+        <div class="field">
+          <label for="tone_keywords">Tone keywords (comma-separated) *</label>
+          <input id="tone_keywords" name="tone_keywords" required placeholder="direct, practical, no-hype, peer-to-peer" />
+        </div>
+
+        <div class="field">
+          <label for="cta_preference">CTA preference *</label>
+          <input id="cta_preference" name="cta_preference" required placeholder="Book a 20-min Fit Call (Calendly) — soft most days, hard Fridays" />
+        </div>
+
+        <div class="field">
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" name="notes" placeholder="Banned phrases, kickoff notes, brand quirks…"></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Submit intake → start 72h clock</button>
+          <button type="button" class="btn btn-ghost" id="downloadBtn">Download JSON backup</button>
+        </div>
+        <div class="msg err" id="errMsg"></div>
+        <div class="msg ok" id="okMsg"></div>
+      </form>
+    </div>
+
+    <div class="card success-panel" id="successPanel">
+      <p class="eyebrow">Intake locked</p>
+      <h2>You’re on the clock.</h2>
+      <p class="lede" style="margin:0 auto 0.5rem">We received your answers. Save this order id — it’s your fulfillment reference.</p>
+      <div class="order-id" id="orderIdDisplay">—</div>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.25rem">Expect Drive folder + walkthrough email within 48–72 hours. Standard/DWY includes one revision round.</p>
+      <a class="btn btn-primary" href="/" style="max-width:280px;margin:0 auto">Back to offer</a>
+    </div>
+
+    <footer>
+      POST <code style="color:var(--muted)">/api/intake</code> · schema: fulfillment/intake.schema.json · static fallback downloads JSON if API is unreachable
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(location.search);
+      const tierParam = (params.get("tier") || "").toLowerCase();
+      const validTiers = ["starter", "standard", "dwy"];
+      const tierSelect = document.getElementById("tier");
+      if (validTiers.includes(tierParam)) {
+        tierSelect.value = tierParam;
+      }
+      const tierLabel = document.getElementById("tierLabel");
+      function syncTierLabel() {
+        tierLabel.textContent = tierSelect.value;
+      }
+      syncTierLabel();
+      tierSelect.addEventListener("change", syncTierLabel);
+
+      // Platform chips
+      const platformInput = document.getElementById("primary_platform");
+      document.querySelectorAll("#platformChips .chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll("#platformChips .chip").forEach((c) => c.classList.remove("active"));
+          chip.classList.add("active");
+          platformInput.value = chip.dataset.value;
+        });
+      });
+
+      function buildPayload() {
+        const fd = new FormData(document.getElementById("intakeForm"));
+        const sample_links = String(fd.get("sample_links") || "")
+          .split(/\n+/)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        const tone_keywords = String(fd.get("tone_keywords") || "")
+          .split(/,/)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        const payload = {
+          client_name: String(fd.get("client_name") || "").trim(),
+          email: String(fd.get("email") || "").trim(),
+          handle: String(fd.get("handle") || "").trim() || undefined,
+          niche: String(fd.get("niche") || "").trim(),
+          offer: String(fd.get("offer") || "").trim(),
+          icp: String(fd.get("icp") || "").trim(),
+          primary_platform: String(fd.get("primary_platform") || "linkedin"),
+          sample_links,
+          tone_keywords,
+          cta_preference: String(fd.get("cta_preference") || "").trim(),
+          tier: String(fd.get("tier") || "standard"),
+          notes: String(fd.get("notes") || "").trim() || undefined,
+        };
+        Object.keys(payload).forEach((k) => {
+          if (payload[k] === undefined) delete payload[k];
+        });
+        return payload;
+      }
+
+      function showErr(text) {
+        const el = document.getElementById("errMsg");
+        el.textContent = text;
+        el.classList.add("show");
+        document.getElementById("okMsg").classList.remove("show");
+      }
+      function showOk(text) {
+        const el = document.getElementById("okMsg");
+        el.textContent = text;
+        el.classList.add("show");
+        document.getElementById("errMsg").classList.remove("show");
+      }
+
+      function downloadJson(payload, orderId) {
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = (orderId || "intake") + ".json";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+
+      function showSuccess(orderId) {
+        document.getElementById("formWrap").classList.add("hide");
+        document.getElementById("successPanel").classList.add("show");
+        document.getElementById("orderIdDisplay").textContent = orderId;
+      }
+
+      document.getElementById("downloadBtn").addEventListener("click", () => {
+        const payload = buildPayload();
+        downloadJson(payload, "intake-backup");
+        showOk("JSON downloaded. You can also submit to start the clock.");
+      });
+
+      document.getElementById("intakeForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const payload = buildPayload();
+        if (!payload.client_name || !payload.email || !payload.niche || !payload.offer || !payload.icp) {
+          showErr("Please fill all required fields.");
+          return;
+        }
+        if (!payload.sample_links.length || !payload.tone_keywords.length) {
+          showErr("Add at least one sample link and one tone keyword.");
+          return;
+        }
+
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.textContent = "Submitting…";
+
+        try {
+          const res = await fetch("/api/intake", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            throw new Error((data.errors && data.errors.join("; ")) || data.error || "Submit failed");
+          }
+          showSuccess(data.order_id);
+          downloadJson({ ...payload, order_id: data.order_id }, data.order_id);
+        } catch (err) {
+          // Static / API-down fallback: local order id + download
+          const localId = "local_" + Math.random().toString(36).slice(2, 10);
+          downloadJson({ ...payload, order_id: localId, _fallback: true }, localId);
+          showSuccess(localId);
+          showOk("API unreachable — saved downloadable JSON with local order id. Email this file to complete intake.");
+          console.warn(err);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Submit intake → start 72h clock";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

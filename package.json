@@ -1,0 +1,11 @@
+{
+  "name": "money-machine",
+  "private": true,
+  "scripts": {
+    "start": "node server/index.js",
+    "postinstall": "npm install --prefix server --omit=dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

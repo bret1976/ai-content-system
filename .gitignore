@@ -1,0 +1,8 @@
+node_modules/
+server/node_modules/
+server/orders/
+**/__pycache__/
+*.pyc
+.env
+app/data/
+app/node_modules/

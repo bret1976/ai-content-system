@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Content System Install — The Ambre Group</title>
+  <meta name="description" content="Done-for-you brand voice, 14-day calendar, 10 ready-to-post pieces, posting SOP, and ops board. Delivered in 48–72 hours." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07080c;
+      --bg-elevated: #0e1018;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.055);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --text: #f4f1ea;
+      --muted: #9a958c;
+      --muted-soft: #6e6a63;
+      --gold: #c9a87c;
+      --gold-bright: #e0c49a;
+      --gold-dim: rgba(201, 168, 124, 0.15);
+      --gold-glow: rgba(201, 168, 124, 0.35);
+      --cream: #f7f3eb;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --max: 1120px;
+      --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+      --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .mesh {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 15% -10%, rgba(201, 168, 124, 0.14), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(120, 140, 200, 0.08), transparent 50%),
+        radial-gradient(ellipse 50% 45% at 50% 100%, rgba(201, 168, 124, 0.06), transparent 55%),
+        radial-gradient(ellipse 40% 30% at 70% 60%, rgba(80, 100, 160, 0.05), transparent 50%);
+    }
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    a { color: var(--gold); text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: var(--gold-bright); }
+    .wrap { position: relative; z-index: 2; max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes softPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .anim { animation: fadeUp 0.8s ease both; }
+    .anim-d1 { animation-delay: 0.08s; }
+    .anim-d2 { animation-delay: 0.16s; }
+    .anim-d3 { animation-delay: 0.24s; }
+    .anim-d4 { animation-delay: 0.32s; }
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; }
+      html { scroll-behavior: auto; }
+    }
+    header {
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      background: rgba(7, 8, 12, 0.65);
+      position: sticky; top: 0; z-index: 50;
+    }
+    header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .logo {
+      font-family: var(--font-serif); font-weight: 600; font-size: 1.05rem;
+      letter-spacing: -0.02em; color: var(--text);
+    }
+    .logo span {
+      color: var(--muted); font-family: var(--font-sans); font-weight: 400;
+      font-size: 0.8rem; margin-left: 0.55rem;
+    }
+    nav { display: flex; align-items: center; gap: 0.25rem; }
+    nav a {
+      color: var(--muted); font-size: 0.875rem; font-weight: 500;
+      padding: 0.4rem 0.75rem; border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav a:hover { color: var(--text); background: var(--surface); }
+    .nav-cta {
+      margin-left: 0.5rem !important;
+      background: var(--gold-dim) !important;
+      color: var(--gold-bright) !important;
+      border: 1px solid rgba(201, 168, 124, 0.25);
+    }
+    .nav-cta:hover {
+      background: rgba(201, 168, 124, 0.25) !important;
+      color: var(--cream) !important;
+    }
+    @media (max-width: 640px) {
+      nav a:not(.nav-cta) { display: none; }
+      .logo span { display: none; }
+    }
+    .hero { padding: 6.5rem 0 5rem; text-align: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--gold); font-weight: 600; margin-bottom: 1.75rem;
+      padding: 0.45rem 1rem; border: 1px solid rgba(201, 168, 124, 0.28);
+      border-radius: 100px; background: var(--gold-dim);
+    }
+    .eyebrow::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); box-shadow: 0 0 10px var(--gold-glow);
+      animation: softPulse 2.4s ease infinite;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.35rem, 5.5vw, 3.85rem);
+      font-weight: 600; line-height: 1.12; letter-spacing: -0.035em;
+      max-width: 16ch; margin: 0 auto 1.5rem; color: var(--cream);
+    }
+    h1 em { font-style: italic; font-weight: 500; color: var(--gold-bright); }
+    .subhead {
+      font-size: clamp(1.05rem, 2vw, 1.2rem); color: var(--muted);
+      max-width: 38rem; margin: 0 auto 2.5rem; line-height: 1.65;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 0.85rem;
+      justify-content: center; margin-bottom: 3rem;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem;
+      padding: 0.95rem 1.75rem; border-radius: 100px; border: 1px solid transparent;
+      cursor: pointer; text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: linear-gradient(165deg, #d4b896 0%, #c9a87c 45%, #b8925e 100%);
+      color: #1a140c;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.25) inset, 0 8px 28px rgba(201,168,124,0.28);
+    }
+    .btn-primary:hover {
+      color: #1a140c;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset, 0 12px 36px rgba(201,168,124,0.4);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      background: transparent; color: var(--text); border-color: var(--border-strong);
+    }
+    .btn-ghost:hover {
+      background: var(--surface); color: var(--cream); border-color: rgba(255,255,255,0.22);
+    }
+    .trust-row {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 1.75rem 2.5rem; color: var(--muted-soft); font-size: 0.82rem; font-weight: 500;
+    }
+    .trust-row span { display: inline-flex; align-items: center; gap: 0.45rem; }
+    .trust-row svg {
+      width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; flex-shrink: 0;
+    }
+    section { padding: 5rem 0; }
+    .section-label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--gold); font-weight: 600; margin-bottom: 0.85rem;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.85rem, 3.5vw, 2.55rem);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1.18;
+      color: var(--cream); margin-bottom: 1rem;
+    }
+    .section-lead {
+      color: var(--muted); font-size: 1.05rem; max-width: 34rem; margin-bottom: 2.75rem;
+    }
+    .centered { text-align: center; }
+    .centered .section-lead { margin-left: auto; margin-right: auto; }
+    .deliverables {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.65rem 1.5rem;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    }
+    .card:hover {
+      background: var(--surface-hover); border-color: var(--border-strong); transform: translateY(-2px);
+    }
+    .card-icon {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--gold-dim);
+      border: 1px solid rgba(201,168,124,0.2); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 1.1rem; color: var(--gold);
+      font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;
+    }
+    .card h3 {
+      font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600;
+      letter-spacing: -0.02em; margin-bottom: 0.45rem; color: var(--cream);
+    }
+    .card p { color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    @media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+    .step {
+      padding: 1.5rem 1.25rem; border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+    }
+    .step-num {
+      font-family: var(--font-serif); font-size: 2rem; font-weight: 500;
+      color: var(--gold); opacity: 0.55; line-height: 1; margin-bottom: 1rem;
+      letter-spacing: -0.04em;
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--cream); }
+    .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+    .panel { border-radius: var(--radius); padding: 2rem 1.75rem; border: 1px solid var(--border); }
+    .panel-yes {
+      background: linear-gradient(160deg, rgba(201,168,124,0.08), rgba(255,255,255,0.02));
+      border-color: rgba(201,168,124,0.22);
+    }
+    .panel-no { background: var(--surface); }
+    .panel h3 {
+      font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 1.15rem; color: var(--cream);
+    }
+    .panel ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .panel li {
+      display: flex; gap: 0.7rem; font-size: 0.94rem; color: var(--muted); line-height: 1.45;
+    }
+    .panel li::before {
+      content: ""; flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px;
+      border-radius: 50%; background-size: 10px; background-repeat: no-repeat; background-position: center;
+    }
+    .panel-yes li::before {
+      background-color: var(--gold-dim);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23c9a87c' stroke-width='2'%3E%3Cpath d='M2 6l3 3 5-5'/%3E%3C/svg%3E");
+    }
+    .panel-no li::before {
+      background-color: rgba(255,255,255,0.05);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%236e6a63' stroke-width='2'%3E%3Cpath d='M3 3l6 6M9 3l-6 6'/%3E%3C/svg%3E");
+    }
+    .guarantee {
+      margin: 2.5rem 0 0; padding: 2.5rem 2rem;
+      border-radius: calc(var(--radius) + 4px);
+      border: 1px solid rgba(201,168,124,0.3);
+      background:
+        radial-gradient(ellipse 70% 80% at 0% 50%, rgba(201,168,124,0.12), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      text-align: center;
+    }
+    .guarantee h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 0.75rem; }
+    .guarantee p { color: var(--muted); max-width: 36rem; margin: 0 auto; font-size: 1.02rem; }
+    .guarantee strong { color: var(--cream); font-weight: 600; }
+    #pricing { padding-top: 5.5rem; padding-bottom: 5.5rem; }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.15rem;
+      align-items: stretch; margin-top: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+    }
+    .price-card {
+      position: relative; display: flex; flex-direction: column;
+      padding: 2rem 1.65rem 1.75rem; border-radius: calc(var(--radius) + 2px);
+      border: 1px solid var(--border); background: var(--bg-elevated);
+      transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s;
+    }
+    .price-card:hover { transform: translateY(-3px); border-color: var(--border-strong); }
+    .price-card.featured {
+      border-color: rgba(201,168,124,0.45);
+      background:
+        linear-gradient(180deg, rgba(201,168,124,0.1) 0%, rgba(14,16,24,0.95) 40%),
+        var(--bg-elevated);
+      box-shadow:
+        0 0 0 1px rgba(201,168,124,0.12),
+        0 24px 60px rgba(0,0,0,0.45),
+        0 0 80px rgba(201,168,124,0.08);
+      z-index: 1;
+    }
+    @media (min-width: 901px) {
+      .price-card.featured { transform: scale(1.04); padding-top: 2.35rem; padding-bottom: 2.1rem; }
+      .price-card.featured:hover { transform: scale(1.04) translateY(-3px); }
+    }
+    .badge {
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: #1a140c; background: linear-gradient(165deg, #d4b896, #c9a87c);
+      padding: 0.3rem 0.85rem; border-radius: 100px; white-space: nowrap;
+    }
+    .tier-name {
+      font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: var(--cream);
+    }
+    .tier-price {
+      font-family: var(--font-serif); font-size: 2.75rem; font-weight: 600;
+      letter-spacing: -0.04em; color: var(--cream); line-height: 1; margin: 0.85rem 0 0.35rem;
+    }
+    .tier-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.5rem; min-height: 2.6em; }
+    .tier-features {
+      list-style: none; display: flex; flex-direction: column; gap: 0.65rem;
+      margin-bottom: 1.75rem; flex: 1;
+    }
+    .tier-features li {
+      display: flex; gap: 0.6rem; font-size: 0.9rem; color: var(--muted); line-height: 1.4;
+    }
+    .tier-features li::before {
+      content: ""; flex-shrink: 0; width: 16px; height: 16px; margin-top: 2px;
+      border-radius: 50%; background-color: var(--gold-dim);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23c9a87c' stroke-width='2'%3E%3Cpath d='M2 6l3 3 5-5'/%3E%3C/svg%3E");
+      background-size: 9px; background-repeat: no-repeat; background-position: center;
+    }
+    .price-card .btn { width: 100%; margin-top: auto; }
+    .price-card:not(.featured) .btn-primary {
+      background: transparent; color: var(--gold-bright);
+      border: 1px solid rgba(201,168,124,0.4); box-shadow: none;
+    }
+    .price-card:not(.featured) .btn-primary:hover {
+      background: var(--gold-dim); color: var(--cream);
+      border-color: rgba(201,168,124,0.55); box-shadow: none;
+    }
+    .faq-list {
+      max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.65rem;
+    }
+    details {
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--surface); overflow: hidden; transition: border-color 0.2s;
+    }
+    details[open] { border-color: var(--border-strong); }
+    summary {
+      list-style: none; cursor: pointer; padding: 1.15rem 1.35rem;
+      font-weight: 600; font-size: 0.98rem; color: var(--cream);
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+"; font-family: var(--font-serif); font-size: 1.35rem;
+      font-weight: 400; color: var(--gold); line-height: 1;
+    }
+    details[open] summary::after { content: "\2212"; }
+    details .faq-body {
+      padding: 0 1.35rem 1.25rem; color: var(--muted); font-size: 0.94rem; line-height: 1.6;
+    }
+    .final-cta { padding: 5rem 0 6rem; text-align: center; }
+    .final-box {
+      padding: 3.5rem 2rem; border-radius: calc(var(--radius) + 6px);
+      border: 1px solid rgba(201,168,124,0.25);
+      background:
+        radial-gradient(ellipse 60% 70% at 50% 0%, rgba(201,168,124,0.14), transparent 55%),
+        radial-gradient(ellipse 40% 50% at 80% 100%, rgba(100,120,180,0.08), transparent 50%),
+        var(--bg-elevated);
+    }
+    .final-box h2 { max-width: 18ch; margin-left: auto; margin-right: auto; }
+    .final-box .section-lead { margin-bottom: 2rem; }
+    .final-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; justify-content: center; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem 0 2.5rem; position: relative; z-index: 2;
+    }
+    footer .wrap {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
+    }
+    footer p { font-size: 0.82rem; color: var(--muted-soft); }
+  </style>
+</head>
+<body>
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="logo">The Ambre Group <span>AI Content System</span></div>
+      <nav>
+        <a href="#deliverables">Deliverables</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#pricing">Get started</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow anim">AI Content System Install</div>
+        <h1 class="anim anim-d1">Stop posting randomly.<br /><em>Install a 14-day system</em> in 72 hours.</h1>
+        <p class="subhead anim anim-d2">
+          Done-for-you brand voice, 14-day calendar, 10 ready-to-post pieces, posting SOP, and ops board — delivered in 48–72 hours so you finally post consistently.
+        </p>
+        <div class="hero-actions anim anim-d3">
+          <a class="btn btn-primary" href="#stripe-link-standard">Get Standard — $997</a>
+          <a class="btn btn-ghost" href="#pricing">See all tiers</a>
+        </div>
+        <div class="trust-row anim anim-d4">
+          <span><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>48–72h delivery</span>
+          <span><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Full refund if missed</span>
+          <span><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Install, not a course</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="deliverables">
+      <div class="wrap">
+        <p class="section-label">What you receive</p>
+        <h2>A usable 14-day content system</h2>
+        <p class="section-lead">Five assets, built for your brand — ready to run the week they arrive.</p>
+        <div class="deliverables">
+          <article class="card">
+            <div class="card-icon">01</div>
+            <h3>Brand voice doc</h3>
+            <p>Positioning, tone, do/don’t guidance, and sample lines so every post sounds like you.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">02</div>
+            <h3>14-day content calendar</h3>
+            <p>Themes, hooks, CTAs, and platform notes mapped to your offer and audience.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">03</div>
+            <h3>10 ready-to-post pieces</h3>
+            <p>LinkedIn / X / Instagram-ready copy you can publish without starting from a blank page.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">04</div>
+            <h3>Posting SOP</h3>
+            <p>When to post, how to adapt, and a checklist your VA — or you — can run weekly.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">05</div>
+            <h3>Ops board</h3>
+            <p>Notion or Google Docs pipeline with status — no more chaos folders.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <p class="section-label">Process</p>
+        <h2>How it works</h2>
+        <p class="section-lead">Pay once. Intake takes about 15 minutes. We build. You post.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <h3>Pay &amp; intake</h3>
+            <p>Short form: niche, offer, audience, 3–5 links or posts you like. Voice notes optional.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <h3>We build</h3>
+            <p>Brand voice, calendar, 10 posts, posting SOP, and ops board — tailored to you.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <h3>You receive</h3>
+            <p>Drive folder + walkthrough email in 48–72 hours after intake is complete.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <h3>You post</h3>
+            <p>Follow the SOP. One revision on Standard and Done-with-you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="section-label">Fit</p>
+        <h2>Built for people who already sell</h2>
+        <p class="section-lead">US small business owners, coaches, and agencies who post in fits and starts — not people still figuring out their offer.</p>
+        <div class="split">
+          <div class="panel panel-yes">
+            <h3>Who it’s for</h3>
+            <ul>
+              <li>Founders, coaches, and agency owners who post inconsistently</li>
+              <li>You already have a brand or niche</li>
+              <li>You want a system you can run weekly — not another course</li>
+            </ul>
+          </div>
+          <div class="panel panel-no">
+            <h3>Who it’s not for</h3>
+            <ul>
+              <li>Anyone wanting us to manage posting forever (this is install, not retainership)</li>
+              <li>Brands with no offer or audience yet</li>
+              <li>“Make me viral” requests</li>
+            </ul>
+          </div>
+        </div>
+        <div class="guarantee" id="guarantee">
+          <h2>72-hour delivery guarantee</h2>
+          <p>If you don’t get a <strong>usable 14-day system within 72 hours</strong> of completed intake, you get a <strong>full refund</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap centered">
+        <p class="section-label">Pricing</p>
+        <h2>One install. Two weeks of content planned.</h2>
+        <p class="section-lead">Choose the level of support that matches how hands-on you want the kickoff to be.</p>
+        <div class="pricing-grid">
+          <article class="price-card">
+            <h3 class="tier-name">Starter</h3>
+            <p class="tier-price">$497</p>
+            <p class="tier-desc">Calendar, posts, and SOP — delivered fast.</p>
+            <ul class="tier-features">
+              <li>14-day content calendar</li>
+              <li>10 ready-to-post pieces</li>
+              <li>Posting SOP</li>
+              <li>Delivery in 48–72h via Drive + Gmail</li>
+            </ul>
+            <a class="btn btn-primary" href="#stripe-link-starter">Get Starter</a>
+          </article>
+          <article class="price-card featured">
+            <span class="badge">Most booked</span>
+            <h3 class="tier-name">Standard</h3>
+            <p class="tier-price">$997</p>
+            <p class="tier-desc">Full system: voice, board, and one revision.</p>
+            <ul class="tier-features">
+              <li>Everything in Starter</li>
+              <li>Brand voice doc</li>
+              <li>Notion / Docs ops board</li>
+              <li>1 revision round</li>
+              <li>Delivery in 48–72h</li>
+            </ul>
+            <a class="btn btn-primary" href="#stripe-link-standard">Get Standard</a>
+          </article>
+          <article class="price-card">
+            <h3 class="tier-name">Done-with-you</h3>
+            <p class="tier-price">$1,497</p>
+            <p class="tier-desc">Kickoff call plus a week of async polish.</p>
+            <ul class="tier-features">
+              <li>Everything in Standard</li>
+              <li>30-min kickoff call</li>
+              <li>7-day async tweaks (Slack / email)</li>
+              <li>Kickoff within 24h of payment</li>
+              <li>System within 48–72h after kickoff</li>
+            </ul>
+            <a class="btn btn-primary" href="#stripe-link-dwy">Get Done-with-you</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap centered">
+        <p class="section-label">FAQ</p>
+        <h2>Questions, answered</h2>
+        <p class="section-lead">Straight answers before you pay.</p>
+        <div class="faq-list" style="text-align: left;">
+          <details>
+            <summary>How fast is delivery?</summary>
+            <div class="faq-body">48–72 hours after we have your intake answers (and after kickoff for Done-with-you).</div>
+          </details>
+          <details>
+            <summary>What do you need from me?</summary>
+            <div class="faq-body">A short intake: niche, offer, audience, 3–5 links or posts you like. Voice notes optional. About 15 minutes.</div>
+          </details>
+          <details>
+            <summary>Which platforms?</summary>
+            <div class="faq-body">Copy is LinkedIn / X / Instagram-ready. You pick primary; we adapt tone per channel.</div>
+          </details>
+          <details>
+            <summary>Can I revise?</summary>
+            <div class="faq-body">Starter: none included. Standard &amp; Done-with-you: 1 revision. Done-with-you also gets 7-day async tweaks.</div>
+          </details>
+          <details>
+            <summary>What’s the refund policy?</summary>
+            <div class="faq-body">If we don’t deliver a usable 14-day system in 72 hours (clock starts when intake is complete), full refund. No refund after delivery acceptance for “I changed my mind.”</div>
+          </details>
+          <details>
+            <summary>Do you post for me?</summary>
+            <div class="faq-body">No. You get the system and SOP. Posting is yours — or your VA’s.</div>
+          </details>
+          <details>
+            <summary>What tools do you use?</summary>
+            <div class="faq-body">Google Docs / Drive by default. Notion ops board on Standard and Done-with-you.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="wrap">
+        <div class="final-box">
+          <p class="section-label">Ready</p>
+          <h2>Install your content system this week</h2>
+          <p class="section-lead">Pay once. Post for two weeks with a plan — brand voice, calendar, posts, SOP, and ops board included.</p>
+          <div class="final-actions">
+            <a class="btn btn-primary" href="#stripe-link-standard">Get Standard — $997</a>
+            <a class="btn btn-ghost" href="#pricing">Compare tiers</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="logo">The Ambre Group</div>
+      <p>AI Content System Install · © 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

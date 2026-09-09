@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://money-machine.local/schemas/intake.schema.json",
+  "title": "AI Content System Install — Intake",
+  "description": "Required fields before fulfillment clock starts. Validate intake JSON against this schema before running generate_pack.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "client_name",
+    "email",
+    "niche",
+    "offer",
+    "icp",
+    "primary_platform",
+    "sample_links",
+    "tone_keywords",
+    "cta_preference",
+    "tier"
+  ],
+  "properties": {
+    "client_name": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Business or personal brand name used in pack folder and docs."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Delivery + revision contact."
+    },
+    "niche": {
+      "type": "string",
+      "minLength": 3,
+      "description": "What space they operate in (e.g. B2B sales coaching for SaaS founders)."
+    },
+    "offer": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Primary paid offer they want content to support."
+    },
+    "icp": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Ideal client profile — who buys, situation, pain."
+    },
+    "primary_platform": {
+      "type": "string",
+      "enum": ["linkedin", "x", "ig"],
+      "description": "Primary channel; copy length and format adapt to this."
+    },
+    "sample_links": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      },
+      "description": "URLs or paste references of posts/pages they like (voice + style)."
+    },
+    "tone_keywords": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "e.g. direct, warm, technical, no-hype."
+    },
+    "cta_preference": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Preferred CTA style: book call, freebie, reply, buy, DM keyword, etc."
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["starter", "standard", "dwy"],
+      "description": "Paid tier. starter skips brand voice + ops board."
+    },
+    "handle": {
+      "type": "string",
+      "description": "Optional social handle for attribution in posts."
+    },
+    "client_slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Optional folder slug; default derived from client_name."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional freeform kickoff notes (especially DWY)."
+    }
+  }
+}

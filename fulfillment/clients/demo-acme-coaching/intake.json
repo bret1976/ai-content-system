@@ -1,0 +1,27 @@
+{
+  "client_name": "Acme Coaching",
+  "client_slug": "demo-acme-coaching",
+  "email": "jordan@acmecoaching.example",
+  "handle": "@jordancolecoaches",
+  "niche": "Executive coaching for US mid-market SaaS founders who just crossed $2M ARR and feel stuck as the bottleneck",
+  "offer": "The Operator Reset \u2014 8-week 1:1 coaching intensive ($8.5k) that installs a weekly operating rhythm so the founder stops being the default decision-maker and reclaim 10+ hours/week",
+  "icp": "US-based SaaS founders / CEOs, typically 30\u201348, $2\u201312M ARR, team of 12\u201340, still in most hiring loops and product calls. They know they should delegate but keep jumping back in. Buyers are the founder (sometimes co-signed by a spouse or co-founder). They hate fluffy mindset coaching; they want calendars, decision rules, and accountability.",
+  "primary_platform": "linkedin",
+  "sample_links": [
+    "https://linkedin.com/posts/example-bottleneck-founder-post",
+    "https://linkedin.com/posts/example-calendar-audit-story",
+    "https://www.jordancolecoaches.example/blog/stop-being-the-firefighter",
+    "https://x.com/example/status/operator-rhythm-thread"
+  ],
+  "tone_keywords": [
+    "direct",
+    "practical",
+    "no-hype",
+    "peer-to-peer",
+    "slightly wry",
+    "operator-not-guru"
+  ],
+  "cta_preference": "Book a 20-min Operator Fit Call (Calendly) \u2014 soft CTA most days; hard CTA on Fridays",
+  "tier": "standard",
+  "notes": "Jordan prefers short paragraphs, numbers over adjectives, and never uses 'crush it' / '10x' / 'hustle'. Avoid fake revenue claims. Mention The Operator Reset by name 3\u20134 times across the pack, not every post."
+}
