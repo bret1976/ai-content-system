@@ -91,6 +91,38 @@ function writeOrder(order) {
   fs.writeFileSync(orderPath(order.order_id), JSON.stringify(order, null, 2));
 }
 
+/** Run pack generator for an order; mutates + persists order. Returns { ok, pack_path?, error? }. */
+function runPackGeneration(order) {
+  const slug = order.client_slug || slugify(order.client_name);
+  const outDir = path.join(CLIENTS_DIR, slug);
+  const intakeFile = path.join(ORDERS_DIR, `${order.order_id}.intake.json`);
+  fs.writeFileSync(intakeFile, JSON.stringify(order.intake, null, 2));
+
+  const result = spawnSync(
+    "python3",
+    [GENERATOR, intakeFile, "--out-dir", outDir],
+    { encoding: "utf8", timeout: 60_000 }
+  );
+
+  if (result.status !== 0) {
+    order.status = "generate_failed";
+    order.generate_error = (result.stderr || result.stdout || "unknown error").slice(0, 2000);
+    order.updated_at = new Date().toISOString();
+    writeOrder(order);
+    return { ok: false, error: order.generate_error };
+  }
+
+  const rel = path.relative(ROOT, outDir);
+  order.status = "pack_ready";
+  order.pack_path = rel;
+  order.generate_error = null;
+  order.updated_at = new Date().toISOString();
+  order.generate_log = (result.stdout || "").slice(0, 2000);
+  writeOrder(order);
+
+  return { ok: true, pack_path: rel, absolute_pack_path: outDir, stdout: result.stdout };
+}
+
 app.get("/health", (_req, res) => {
   res.json({
     ok: true,
@@ -138,13 +170,28 @@ app.post("/api/intake", (req, res) => {
     JSON.stringify(order.intake, null, 2)
   );
 
-  res.status(201).json({
+  // Auto-run pack generation (same logic as POST /api/generate)
+  const gen = runPackGeneration(order);
+
+  if (gen.ok) {
+    return res.status(201).json({
+      ok: true,
+      order_id,
+      status: "pack_ready",
+      pack_path: gen.pack_path,
+      message:
+        "Intake received and pack generated. Drive + Gmail delivery is next.",
+    });
+  }
+
+  // Generate failed: still 201 — intake is saved; report generate_error
+  return res.status(201).json({
     ok: true,
     order_id,
-    status: order.status,
+    status: "intake_received",
+    generate_error: gen.error,
     message:
-      "Intake received. We start the 72h clock now. You'll get Drive + Gmail delivery when the pack is ready.",
-    next: `POST /api/generate {"order_id":"${order_id}"}`,
+      "Intake received. Pack generation failed — we'll retry. You'll get Drive + Gmail delivery when the pack is ready.",
   });
 });
 
@@ -158,45 +205,55 @@ app.post("/api/generate", (req, res) => {
     return res.status(404).json({ ok: false, error: "order not found" });
   }
 
-  const slug = order.client_slug || slugify(order.client_name);
-  const outDir = path.join(CLIENTS_DIR, slug);
-  const intakeFile = path.join(ORDERS_DIR, `${order_id}.intake.json`);
-  fs.writeFileSync(intakeFile, JSON.stringify(order.intake, null, 2));
+  const gen = runPackGeneration(order);
 
-  const result = spawnSync(
-    "python3",
-    [GENERATOR, intakeFile, "--out-dir", outDir],
-    { encoding: "utf8", timeout: 60_000 }
-  );
-
-  if (result.status !== 0) {
-    order.status = "generate_failed";
-    order.generate_error = (result.stderr || result.stdout || "unknown error").slice(0, 2000);
-    order.updated_at = new Date().toISOString();
-    writeOrder(order);
+  if (!gen.ok) {
     return res.status(500).json({
       ok: false,
       order_id,
       error: "generate_pack failed",
-      detail: order.generate_error,
+      detail: gen.error,
     });
   }
 
-  const rel = path.relative(ROOT, outDir);
-  order.status = "pack_ready";
-  order.pack_path = rel;
-  order.generate_error = null;
-  order.updated_at = new Date().toISOString();
-  order.generate_log = (result.stdout || "").slice(0, 2000);
+  res.json({
+    ok: true,
+    order_id,
+    status: order.status,
+    pack_path: gen.pack_path,
+    absolute_pack_path: gen.absolute_pack_path,
+    stdout: gen.stdout,
+  });
+});
+
+app.post("/api/deliver", (req, res) => {
+  const body = req.body || {};
+  const { order_id, drive_folder_url } = body;
+  if (!order_id) {
+    return res.status(400).json({ ok: false, error: "order_id required" });
+  }
+  if (!drive_folder_url) {
+    return res.status(400).json({ ok: false, error: "drive_folder_url required" });
+  }
+
+  const order = readOrder(order_id);
+  if (!order) {
+    return res.status(404).json({ ok: false, error: "order not found" });
+  }
+
+  const now = new Date().toISOString();
+  order.status = "delivered";
+  order.drive_folder_url = drive_folder_url;
+  order.delivered_at = now;
+  order.updated_at = now;
   writeOrder(order);
 
   res.json({
     ok: true,
     order_id,
     status: order.status,
-    pack_path: rel,
-    absolute_pack_path: outDir,
-    stdout: result.stdout,
+    drive_folder_url: order.drive_folder_url,
+    delivered_at: order.delivered_at,
   });
 });
 
@@ -226,6 +283,8 @@ app.get("/api/orders", (_req, res) => {
       tier: o.tier,
       created_at: o.created_at,
       pack_path: o.pack_path,
+      drive_folder_url: o.drive_folder_url || null,
+      delivered_at: o.delivered_at || null,
     })),
   });
 });

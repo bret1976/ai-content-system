@@ -340,11 +340,11 @@
     </div>
 
     <div class="card success-panel" id="successPanel">
-      <p class="eyebrow">Intake locked</p>
-      <h2>You’re on the clock.</h2>
-      <p class="lede" style="margin:0 auto 0.5rem">We received your answers. Save this order id — it’s your fulfillment reference.</p>
+      <p class="eyebrow" id="successEyebrow">Intake locked</p>
+      <h2 id="successTitle">You’re on the clock.</h2>
+      <p class="lede" id="successLede" style="margin:0 auto 0.5rem">We received your answers. Save this order id — it’s your fulfillment reference.</p>
       <div class="order-id" id="orderIdDisplay">—</div>
-      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.25rem">Expect Drive folder + walkthrough email within 48–72 hours. Standard/DWY includes one revision round.</p>
+      <p id="successDetail" style="color:var(--muted);font-size:0.9rem;margin-bottom:1.25rem">Expect Drive folder + walkthrough email within 48–72 hours. Standard/DWY includes one revision round.</p>
       <a class="btn btn-primary" href="/" style="max-width:280px;margin:0 auto">Back to offer</a>
     </div>
 
@@ -431,10 +431,31 @@
         URL.revokeObjectURL(a.href);
       }
 
-      function showSuccess(orderId) {
+      function showSuccess(orderId, apiData) {
         document.getElementById("formWrap").classList.add("hide");
         document.getElementById("successPanel").classList.add("show");
         document.getElementById("orderIdDisplay").textContent = orderId;
+        const status = apiData && apiData.status;
+        const eyebrow = document.getElementById("successEyebrow");
+        const title = document.getElementById("successTitle");
+        const lede = document.getElementById("successLede");
+        const detail = document.getElementById("successDetail");
+        if (status === "pack_ready") {
+          eyebrow.textContent = "Pack ready";
+          title.textContent = "Your pack is ready.";
+          lede.textContent = "Intake received and your content pack was generated. Save this order id — it’s your fulfillment reference.";
+          detail.textContent = "We’re preparing Drive folder + walkthrough email next. You’ll get delivery within 48–72 hours. Standard/DWY includes one revision round.";
+        } else if (status === "intake_received" && apiData && apiData.generate_error) {
+          eyebrow.textContent = "Intake locked · pack generating";
+          title.textContent = "You’re on the clock.";
+          lede.textContent = "We received your answers. Pack generation is retrying — save this order id.";
+          detail.textContent = "Expect Drive folder + walkthrough email within 48–72 hours. Standard/DWY includes one revision round.";
+        } else {
+          eyebrow.textContent = "Intake locked";
+          title.textContent = "You’re on the clock.";
+          lede.textContent = "We received your answers. Save this order id — it’s your fulfillment reference.";
+          detail.textContent = "Expect Drive folder + walkthrough email within 48–72 hours. Standard/DWY includes one revision round.";
+        }
       }
 
       document.getElementById("downloadBtn").addEventListener("click", () => {
@@ -469,7 +490,7 @@
           if (!res.ok) {
             throw new Error((data.errors && data.errors.join("; ")) || data.error || "Submit failed");
           }
-          showSuccess(data.order_id);
+          showSuccess(data.order_id, data);
           downloadJson({ ...payload, order_id: data.order_id }, data.order_id);
         } catch (err) {
           // Static / API-down fallback: local order id + download
