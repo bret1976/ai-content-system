@@ -1,5 +1,5 @@
 /**
- * AI Content System Install — Express server
+ * ReadyBatch — Express server
  * Serves site/ static files + intake/generate APIs.
  * Railway: root Dockerfile or Procfile runs `node server/index.js` from repo root,
  * or set Railway Root Directory to server/ and start `npm start`.
@@ -307,7 +307,7 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`AI Content System listening on :${PORT}`);
+  console.log(`ReadyBatch listening on :${PORT}`);
   console.log(`  site: ${SITE}`);
   console.log(`  fulfillment: ${FULFILLMENT}`);
   console.log(`  orders: ${ORDERS_DIR}`);

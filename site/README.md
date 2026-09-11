@@ -1,6 +1,6 @@
-# AI Content System — Offer Page
+# ReadyBatch — Offer Page
 
-Static landing page for the **AI Content System Install** offer ($497 / $997 / $1,497).
+Static landing page for the **ReadyBatch** offer ($497 / $997 / $1,497).
 
 ## Deploy
 

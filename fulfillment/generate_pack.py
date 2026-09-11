@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AI Content System Install — pack generator.
+ReadyBatch — pack generator.
 
 Usage:
   python generate_pack.py <intake.json> [--out-dir DIR]
@@ -747,7 +747,7 @@ def render_readme(intake: dict, out_dir: Path) -> str:
     extra = "\n".join(f"- {e}" for e in extras) if extras else "- Starter: no revision round; post as written."
     return f"""# START HERE — {intake['client_name']}
 
-Your **AI Content System Install** pack is ready.
+Your **ReadyBatch** pack is ready.
 
 ## What's inside
 {files}
@@ -766,7 +766,7 @@ Your **AI Content System Install** pack is ready.
 ## Guarantee
 Usable 14-day system within 72 hours of completed intake — or full refund per offer terms.
 
-— The Ambre Group / AI Content System Install  
+— The Ambre Group / ReadyBatch  
 Pack folder: `{out_dir.name}`
 """
 
@@ -804,7 +804,7 @@ def generate(intake: dict, out_dir: Path, start: date | None = None) -> Path:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Generate AI Content System client pack")
+    parser = argparse.ArgumentParser(description="Generate ReadyBatch client pack")
     parser.add_argument("intake_json", type=Path, help="Path to intake JSON")
     parser.add_argument(
         "--out-dir",
