@@ -1,4 +1,4 @@
-# Day 1–7 plan — AI Content System Install (owned offer)
+# Day 1–7 plan — ReadyBatch (owned offer)
 
 Assumes: Stripe account ready, domain pointed (or ready to point), Gmail live.  
 Path: **landing page + Stripe checkout + X/email outreach**. 

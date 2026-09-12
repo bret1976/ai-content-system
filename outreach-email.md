@@ -1,4 +1,4 @@
-# Cold email + follow-ups — AI Content System Install
+# Cold email + follow-ups — ReadyBatch
 
 Gmail-ready. Keep subject lines under ~50 chars. Personalize {{FirstName}}, {{Company}}, {{Observation}}.
 
@@ -72,7 +72,7 @@ If it is: reply with your niche + one URL and I’ll tell you which tier fits (n
 
 Last note from me on this.
 
-We’re booking AI Content System Installs this week (Drive delivery in 72h). If useful later, the landing page is {{LandingURL}}.
+We’re booking ReadyBatch installs this week (Drive delivery in 72h). If useful later, the landing page is {{LandingURL}}.
 
 Either way, good luck with {{Company}}.
 

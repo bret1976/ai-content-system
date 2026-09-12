@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://money-machine.local/schemas/intake.schema.json",
-  "title": "AI Content System Install — Intake",
+  "title": "ReadyBatch — Intake",
   "description": "Required fields before fulfillment clock starts. Validate intake JSON against this schema before running generate_pack.py.",
   "type": "object",
   "additionalProperties": false,

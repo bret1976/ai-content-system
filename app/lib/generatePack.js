@@ -1,5 +1,5 @@
 /**
- * Node fallback pack generator for AI Content System Install.
+ * Node fallback pack generator for ReadyBatch.
  * Writes real, intake-specific content (not lorem) under outDir.
  */
 const fs = require('fs');
@@ -765,7 +765,7 @@ function renderReadme(intake, outDirName) {
   const extra = extras.map((e) => `- ${e}`).join('\n');
   return `# START HERE — ${intake.client_name}
 
-Your **AI Content System Install** pack is ready.
+Your **ReadyBatch** pack is ready.
 
 ## What's inside
 ${files}
@@ -784,7 +784,7 @@ ${extra}
 ## Guarantee
 Usable 14-day system within 72 hours of completed intake — or full refund per offer terms.
 
-— The Ambre Group / AI Content System Install  
+— The Ambre Group / ReadyBatch  
 Pack folder: \`${outDirName}\`
 `;
 }

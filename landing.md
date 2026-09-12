@@ -1,4 +1,4 @@
-# Landing page copy — AI Content System Install
+# Landing page copy — ReadyBatch
 
 ---
 

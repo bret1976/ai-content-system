@@ -1,9 +1,9 @@
-# FULFILLMENT — AI Content System Install
+# FULFILLMENT — ReadyBatch
 
 End-to-end playbook for the agent (and humans) fulfilling an order.  
 **Do not push/deploy unless the operator asks.**
 
-Production site (Railway): `https://offer-production-8930.up.railway.app`
+Production site (Railway): `https://platform-v2-production-0c06.up.railway.app`
 
 ---
 
@@ -13,9 +13,9 @@ Configure each Payment Link / Checkout Session `after_completion` (or success UR
 
 | Tier | Redirect |
 |------|----------|
-| Starter | `https://offer-production-8930.up.railway.app/intake.html?tier=starter` |
-| Standard | `https://offer-production-8930.up.railway.app/intake.html?tier=standard` |
-| Done-with-you | `https://offer-production-8930.up.railway.app/intake.html?tier=dwy` |
+| Starter | `https://platform-v2-production-0c06.up.railway.app/intake.html?tier=starter` |
+| Standard | `https://platform-v2-production-0c06.up.railway.app/intake.html?tier=standard` |
+| Done-with-you | `https://platform-v2-production-0c06.up.railway.app/intake.html?tier=dwy` |
 
 The intake page pre-selects `tier` from the query string. Submitting the form **POSTs** JSON to `/api/intake` (fields match `intake.schema.json`). If the API is down, the browser downloads a JSON backup with a `local_*` order id — email that file in manually.
 
@@ -27,7 +27,7 @@ The intake page pre-selects `tier` from the query string. Submitting the form **
 2. **Intake** — Customer submits → `POST /api/intake` → order stored as `server/orders/ord_….json`, status `intake_received`. **72h clock starts.**
 3. **Generate pack**
    ```bash
-   curl -s -X POST https://offer-production-8930.up.railway.app/api/generate \
+   curl -s -X POST https://platform-v2-production-0c06.up.railway.app/api/generate \
      -H 'content-type: application/json' \
      -d '{"order_id":"ord_…"}'
    ```
@@ -41,7 +41,7 @@ The intake page pre-selects `tier` from the query string. Submitting the form **
    ```bash
    cd fulfillment/clients && zip -r ../<slug>.zip <slug>/
    ```
-5. **Email via Gmail** — Send walkthrough + zip (or Drive link) using the delivery template below. To: intake email. Subject: `Your AI Content System Install is ready`.
+5. **Email via Gmail** — Send walkthrough + zip (or Drive link) using the delivery template below. To: intake email. Subject: `Your ReadyBatch pack is ready`.
 6. **Drive (when connected)** — Upload pack folder to `Clients/<Client>/`, share with client email, paste folder link in the Gmail body. Until Drive MCP/OAuth is connected, attach the zip or host temporarily.
 7. **Revisions** — Standard/DWY: one batch of notes, ≤48h. DWY: +7-day async tweaks. Then archive; mark order closed in sheet/orders JSON.
 
@@ -90,7 +90,7 @@ Railway: use root `Dockerfile` (Node 20 + python3) or `Procfile` (`web: node ser
 
 ## Gmail delivery template
 
-**Subject:** Your AI Content System Install is ready
+**Subject:** Your ReadyBatch pack is ready
 
 Hi FirstName,
 

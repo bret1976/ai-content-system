@@ -1,4 +1,4 @@
-# AI Content System Install — Railway-ready
+# ReadyBatch — Railway-ready
 # Serves site/ + /api/* and runs Python generate_pack.py
 FROM node:20-bookworm-slim
 
