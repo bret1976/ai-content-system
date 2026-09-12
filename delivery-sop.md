@@ -1,4 +1,4 @@
-# Delivery SOP — AI Content System Install
+# Delivery SOP — ReadyBatch
 
 Hands-off fulfillment using AI + Google Docs/Drive (+ Notion for Standard+). Target: usable pack in 48–72h after intake complete.
 
@@ -72,7 +72,7 @@ Work folder: `Clients/{{Client}}/deliverables/`
 
 ## 3. Delivery email (template)
 
-**Subject:** Your AI Content System Install is ready
+**Subject:** Your ReadyBatch pack is ready
 
 Hi {{FirstName}},
 

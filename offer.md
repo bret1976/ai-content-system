@@ -1,6 +1,6 @@
-# AI Content System Install
+# ReadyBatch
 
-**Done-for-you content system. Live in 48–72 hours.**
+**Done-for-you 14-day content install. Live in 48–72 hours.**
 
 For US small business owners, agencies, and coaches who already post — just not consistently.
 
@@ -92,4 +92,12 @@ Google Docs / Drive by default. Notion ops board on Standard+.
 
 Book or pay → intake form → we build → Drive folder + walkthrough email in 48–72h.
 
-Stripe checkout links: configure on landing (`#checkout` placeholders).
+### Live checkout
+
+| Tier | Payment link |
+|------|----------------|
+| Starter $497 | https://buy.stripe.com/5kQ14oc0T7Nbgze9NKbbG02 |
+| Standard $997 | https://buy.stripe.com/5kQ8wQ8OHd7vbeU8JGbbG03 |
+| Done-with-you $1,497 | https://buy.stripe.com/dRm14o5Cvebz82I7FCbbG04 |
+
+**Landing:** https://platform-v2-production-0c06.up.railway.app

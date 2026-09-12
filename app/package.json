@@ -1,7 +1,7 @@
 {
   "name": "money-machine-fulfillment",
   "version": "1.0.0",
-  "description": "AI Content System Install — fulfillment API + pack generator",
+  "description": "ReadyBatch — fulfillment API + pack generator",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

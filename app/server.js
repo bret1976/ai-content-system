@@ -1,5 +1,5 @@
 /**
- * AI Content System Install — fulfillment server
+ * ReadyBatch — fulfillment server
  * Serves site/, accepts intake, generates packs, zips delivery.
  */
 const express = require('express');

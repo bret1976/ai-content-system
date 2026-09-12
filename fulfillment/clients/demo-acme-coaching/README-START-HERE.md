@@ -1,6 +1,6 @@
 # START HERE — Acme Coaching
 
-Your **AI Content System Install** pack is ready.
+Your **ReadyBatch** pack is ready.
 
 ## What's inside
 - `00-intake.md`
@@ -24,5 +24,5 @@ Your **AI Content System Install** pack is ready.
 ## Guarantee
 Usable 14-day system within 72 hours of completed intake — or full refund per offer terms.
 
-— The Ambre Group / AI Content System Install  
+— The Ambre Group / ReadyBatch  
 Pack folder: `demo-acme-coaching`

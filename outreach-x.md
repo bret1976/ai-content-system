@@ -1,4 +1,4 @@
-# X / DM openers — AI Content System Install
+# X / DM openers — ReadyBatch
 
 Rules: short, value-first, no “I help you grow” spam. Personalize with one real observation. Soft ask or free value first.
 
